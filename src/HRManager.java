@@ -6,7 +6,7 @@ public class HRManager {
 
     private static final String LINE = "--------------------------------------";
 
-    private static final String[] NAVIGATION_OPTIONS = new String[]{"Exit", "Add Employee", "Edit Employee", "List Employees", "Delete Employee"};
+    private static final String[] NAVIGATION_OPTIONS = new String[]{"Exit", "Add Employee", "Edit Employee", "List Employees", "Retire Employees", "Delete Employee"};
 
     private static final Scanner scanner = new Scanner(System.in);
 
@@ -57,6 +57,9 @@ public class HRManager {
                 view.showListEmployees();
                 break;
             case 5:
+                view.listRetiredEmployees();
+                break;
+            case 6:
                 view.showDeleteEmployee();
                 break;
             default:

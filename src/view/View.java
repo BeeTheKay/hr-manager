@@ -5,6 +5,10 @@ import models.Employee;
 import util.HRManagerUtil;
 
 import java.text.ParseException;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
@@ -245,5 +249,36 @@ public class View {
                 "BIRTH DATE", "JOB DESCRIPTION", "SALARY", "EMPLOYMENT DATE");
         System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------");
         showEmployee(employee);
+    }
+
+    public void listRetiredEmployees() {
+        List<Employee> allEmployees = db.getEmployees();
+
+        System.out.printf("%10s %30s %22s %40s %10s %22s %5s %15s\n", "ID", "NAME",
+                "BIRTH DATE", "JOB DESCRIPTION", "SALARY", "EMPLOYMENT DATE", "AGE", "RETIRED IN");
+        System.out.println("-----------------------------------------------------------------------------------------------------------------------------------------------------------------");
+
+        for (Employee employee : allEmployees) {
+            LocalDate birthdate = Instant.ofEpochMilli(employee.getBirthdate().getTime()).atZone(ZoneId.systemDefault()).toLocalDate();
+            Period ageDiff = Period.between(birthdate, LocalDate.now());
+            if(ageDiff.getYears() < 63) {
+                continue;
+            }
+            LocalDate retirementDate = birthdate.plusYears(65);
+
+            Period diffRetirement = Period.between(LocalDate.now(), retirementDate);
+
+            int daysToRetire = diffRetirement.getDays();
+
+            System.out.printf("%10s %30s %22s %40s %10s %22s %5s %15s\n",
+                    employee.getId(),
+                    employee.getPrename() + " " + employee.getSurname(),
+                    HRManagerUtil.formatter.format(employee.getBirthdate()),
+                    employee.getJobDescription(),
+                    employee.getSalary(),
+                    HRManagerUtil.formatter.format(employee.getEmploymentDate()),
+                    ageDiff.getYears(),
+                    daysToRetire < 1? "Retired" : daysToRetire + " Days");
+        }
     }
 }
