@@ -1,6 +1,7 @@
 package util;
 
 import java.security.SecureRandom;
+import java.text.SimpleDateFormat;
 import java.util.UUID;
 
 public class HRManagerUtil {
@@ -19,7 +20,7 @@ public class HRManagerUtil {
         String time3 = idThree.toString().replace("-", "");
         String time4 = idFour.toString().replace("-", "");
 
-        StringBuffer data = new StringBuffer();
+        StringBuilder data = new StringBuilder();
         data.append(time);
         data.append(time2);
         data.append(time3);
@@ -29,7 +30,6 @@ public class HRManagerUtil {
         int beginIndex = random.nextInt(100);       //Begin index + length of your string < data length
         int endIndex = beginIndex + 8;            //Length of string which you want
 
-        String yourID = data.substring(beginIndex, endIndex);
-        return yourID;
+        return data.substring(beginIndex, endIndex);
     }
 }

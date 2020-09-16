@@ -3,7 +3,6 @@ package db;
 import models.Employee;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import util.HRManagerUtil;
@@ -17,15 +16,24 @@ public class EmployeeDB {
     }
 
     public void addEmployee(Employee employee) {
-        //TODO: Implement
+        employees.add(employee);
     }
 
     public void deleteEmployee(Employee employee) {
-        //TODO: Implement
+        employees.remove(employee);
     }
 
     public void updateEmployee(Employee employee) {
-        //TODO: Implement
+        employees.set(getOldIndexInList(employee), employee);
+    }
+
+    private int getOldIndexInList(Employee employee) {
+        for (Employee e : employees) {
+            if(e.getId().equals(employee.getId())) {
+                return employees.indexOf(e);
+            }
+        }
+        return 0;
     }
 
     private void addMockData() {

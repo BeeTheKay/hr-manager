@@ -10,10 +10,12 @@ public class HRManager {
 
     private static final Scanner scanner = new Scanner(System.in);
 
-    private static View view = new View();
+    private static final View view = new View();
+
+    private static boolean exit = false;
 
     public static void main(String[] args) {
-        while (true) {
+        while (!exit) {
             printMenu();
         }
     }
@@ -33,15 +35,17 @@ public class HRManager {
     }
 
     private static void selectMenu() {
-        //TODO: add error handling
-        int selectedMenuId = scanner.nextInt();
+        int selectedMenuId = 0;
+        try {
+            selectedMenuId = Integer.parseInt(scanner.nextLine());
+        } catch (Exception ignored) { }
         showMenu(selectedMenuId);
     }
 
     private static void showMenu(int selectedMenuId) {
         switch (selectedMenuId) {
             case 1:
-                System.exit(0);
+                exit = true;
                 break;
             case 2:
                 view.showAddEmployee();
